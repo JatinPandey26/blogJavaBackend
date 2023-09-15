@@ -3,6 +3,8 @@ package com.jatin.blog.com.jatin.blog.Controllers;
 import com.jatin.blog.com.jatin.blog.Payloads.UserDTO;
 import com.jatin.blog.com.jatin.blog.Services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,8 +17,11 @@ public class UserController {
     UserService userService;
 
     @GetMapping("/getUserById")
-    UserDTO getUserById(@RequestParam long userId){
-        return userService.getUserById(userId);
+    ResponseEntity<UserDTO> getUserById(@RequestParam long userId){
+
+        UserDTO userDTO = userService.getUserById(userId);
+
+        return new ResponseEntity<>(userDTO, HttpStatus.CREATED);
     }
 
     @GetMapping("/getAllUsers")

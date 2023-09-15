@@ -3,6 +3,9 @@ package com.jatin.blog.com.jatin.blog.Entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @Table(name = "users")
@@ -22,4 +25,6 @@ public class User {
 
     private String about;
 
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    private List<Post> posts = new ArrayList<>();
 }
