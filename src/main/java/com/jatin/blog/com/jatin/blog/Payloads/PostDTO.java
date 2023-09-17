@@ -6,7 +6,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.ManyToOne;
 import lombok.Data;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Data
 public class PostDTO {
@@ -18,5 +20,11 @@ public class PostDTO {
     private String imageName;
 
     private Date addedDate;
+
+    private CategoryDTO categoryDTO;
+
+    private UserDTO userDTO;
+
+//    private List<CommentDTO> commentsDTO = new ArrayList<CommentDTO>();
 
 }

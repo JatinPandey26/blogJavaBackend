@@ -13,9 +13,10 @@ public interface PostServiceInterface {
     void deletePostById(Long post_id);
     PostDTO getPostById(Long post_id);
 
-    List<PostDTO> getAllPosts();
+    List<PostDTO> getAllPosts(Integer pageSize, Integer pageNumber, String sortByProperty, String sortOrder , String keyword);
 
-    List<PostDTO> getPostByCategory(Long category_id);
+    List<PostDTO> getPostByCategory(Long category_id, Integer pageSize, Integer pageNumber, String sortByProperty, String sortOrder);
 
-    List<PostDTO> getPostByUser( Long user_id);
+    List<PostDTO> getPostByUser(Long user_id,Integer pageSize, Integer pageNumber, String sortByProperty, String sortOrder);
+
 }

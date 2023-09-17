@@ -1,8 +1,11 @@
 package com.jatin.blog.com.jatin.blog.Payloads;
 
-
+import com.jatin.blog.com.jatin.blog.Entities.Post;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 @Data
 public class UserDTO {
@@ -12,4 +15,5 @@ public class UserDTO {
     private String email;
     private String password;
     private String about;
+
 }

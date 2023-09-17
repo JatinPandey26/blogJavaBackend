@@ -15,6 +15,9 @@ import com.jatin.blog.com.jatin.blog.Repositories.PostRepository;
 import com.jatin.blog.com.jatin.blog.Repositories.UserRepository;
 import com.jatin.blog.com.jatin.blog.ServicesInterfaces.PostServiceInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,6 +45,13 @@ public class PostService implements PostServiceInterface {
     UserMapper userMapper;
     CategoryMapper categoryMapper;
 
+    private Pageable getPageable(Integer pageSize, Integer pageNumber, String sortByProperty, String sortOrder) {
+        Sort sort = Sort.by(sortByProperty);
+        if(sortOrder.equals("asc")) sort = sort.ascending();
+        else sort = sort.descending();
+        return PageRequest.of(pageNumber,pageSize,sort);
+    }
+
     public PostService(PostMapper postMapper,UserMapper userMapper,CategoryMapper categoryMapper) {
         this.postMapper = postMapper;
         this.categoryMapper = categoryMapper;
@@ -58,7 +68,6 @@ public class PostService implements PostServiceInterface {
         Category category = categoryMapper.toCategoryFromCategoryDTO(categoryDTO);
 
         Post post = postMapper.toPostFromPostDTO(postDTO);
-        System.out.println(post.getTitle());
         post.setUser(user);
         post.setCategory(category);
         Post savedPost = postRepository.save(post);
@@ -84,25 +93,31 @@ public class PostService implements PostServiceInterface {
         return postMapper.toPostDTOFromPost(post);
     }
 
-
     @Override
-    public List<PostDTO> getAllPosts() {
-        List<Post> postList = postRepository.findAll();
+    public List<PostDTO> getAllPosts(Integer pageSize,Integer pageNumber,String sortByProperty,String sortOrder,String keyword) {
+
+        Pageable pageable = getPageable(pageSize,pageNumber,sortByProperty,sortOrder);
+        List<Post> postList = postRepository.findByTitleContaining(keyword, pageable);
 
         return postMapper.toPostDTOListFromPostList(postList);
     }
 
+
+
     @Override
-    public List<PostDTO> getPostByCategory(Long category_id) {
+    public List<PostDTO> getPostByCategory(Long category_id, Integer pageSize, Integer pageNumber, String sortByProperty, String sortOrder) {
         Category category = categoryRepository.findById(category_id).orElseThrow(()->new ResourceNotFoundException("Category","id",category_id));
-        List<Post> postList = postRepository.getPostByCategory(category);
+        Pageable pageable = getPageable(pageSize,pageNumber,sortByProperty,sortOrder);
+        List<Post> postList = postRepository.getPostByCategory(category,pageable);
         return postMapper.toPostDTOListFromPostList(postList);
     }
 
     @Override
-    public List<PostDTO> getPostByUser(Long user_id) {
+    public List<PostDTO> getPostByUser(Long user_id,Integer pageSize, Integer pageNumber, String sortByProperty, String sortOrder) {
         User user = userRepository.findById(user_id).orElseThrow(()->new ResourceNotFoundException("User","id",user_id));
-        List<Post> postList = postRepository.getPostsByUser(user);
+        Pageable pageable = getPageable(pageSize,pageNumber,sortByProperty,sortOrder);
+        List<Post> postList = postRepository.getPostsByUser(user,pageable);
         return postMapper.toPostDTOListFromPostList(postList);
     }
+
 }

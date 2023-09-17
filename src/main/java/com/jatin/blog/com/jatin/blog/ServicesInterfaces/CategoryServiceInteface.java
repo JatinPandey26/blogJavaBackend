@@ -9,13 +9,13 @@ import java.util.List;
 
 public interface CategoryServiceInteface {
 
-    public CategoryDTO createCategory(CategoryDTO categoryDTO);
+     CategoryDTO createCategory(CategoryDTO categoryDTO);
 
-    public CategoryDTO updateCategory(CategoryDTO categoryDTO);
+     CategoryDTO updateCategory(CategoryDTO categoryDTO);
 
-    public CategoryDTO getCategoryById(Long category_id);
+     CategoryDTO getCategoryById(Long category_id);
 
-    public List<CategoryDTO> getCategories();
+     List<CategoryDTO> getCategories();
 
-    public void deleteCategoryById(Long category_id);
+     void deleteCategoryById(Long category_id);
 }
