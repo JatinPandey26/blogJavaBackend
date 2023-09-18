@@ -32,12 +32,18 @@ public class CommentController {
     @GetMapping("/all")
     ResponseEntity<List<CommentDTO>> getAllComments(){
         List<CommentDTO> commentDTOS = this.commentService.getAllComments();
-        return new ResponseEntity<>(commentDTOS,HttpStatus.OK);
+        return new ResponseEntity<>(commentDTOS,HttpStatus.FOUND);
     }
 
     @GetMapping("/post")
     ResponseEntity<List<CommentDTO>> getAllComments(@RequestParam Long post_id){
         List<CommentDTO> commentDTOS = this.commentService.getCommentsByPostID(post_id);
-        return new ResponseEntity<>(commentDTOS,HttpStatus.OK);
+        return new ResponseEntity<>(commentDTOS,HttpStatus.FOUND);
+    }
+
+    @GetMapping("/lastWeekComments")
+    ResponseEntity<List<CommentDTO>> getLastWeekComments(){
+        List<CommentDTO> commentDTOS = this.commentService.getCommentsOnlyContentFromPreviousWeek();
+        return new ResponseEntity<>(commentDTOS,HttpStatus.FOUND);
     }
 }

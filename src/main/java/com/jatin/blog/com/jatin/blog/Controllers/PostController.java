@@ -51,8 +51,8 @@ public class PostController {
     }
 
 
-@GetMapping("/getById")
-ResponseEntity<PostDTO> getPostById(@RequestParam Long post_id){
+    @GetMapping("/getById")
+    ResponseEntity<PostDTO> getPostById(@RequestParam Long post_id){
         return new ResponseEntity<>(postService.getPostById(post_id),HttpStatus.OK) ;
     }
 

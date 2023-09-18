@@ -79,4 +79,9 @@ public class CommentService implements CommentServiceInterface {
         List<Comment> comments = this.commentRepository.getCommentByPost(post);
         return this.commentMapper.toCommentDTOListFromCommentList(comments);
     }
+
+    public List<CommentDTO> getCommentsOnlyContentFromPreviousWeek(){
+        List<Comment> comments = this.commentRepository.getCommentsOnlyContentFromPreviousWeek();
+        return this.commentMapper.toCommentDTOListFromCommentList(comments);
+    }
 }
